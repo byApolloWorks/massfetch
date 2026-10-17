@@ -1,8 +1,8 @@
 """
-bdownload core
+massfetch core
 ==============
 
-Download engine used by the bdownload web interface. It contains no web or GUI
+Download engine used by the massfetch web interface. It contains no web or GUI
 code, so it can also be imported and used on its own.
 
 What it does:
@@ -14,7 +14,7 @@ What it does:
   * Downloads direct image links over plain HTTP.
   * Runs many downloads in parallel and writes a results report (CSV).
 
-@author Jollibe Dablo
+@author Jollibe Dablo (byApolloWorks)
 """
 
 import csv

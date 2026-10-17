@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 /**
- * bdownload command.
+ * massfetch command.
  *
- * Starts the bdownload web interface on your computer. The first run creates a
+ * Starts the massfetch web interface on your computer. The first run creates a
  * private Python environment automatically, so there is nothing to set up.
  *
- *   bdownload                       start and open the browser
- *   bdownload --port 8080           use another port
- *   bdownload --no-open             do not open the browser
- *   bdownload --install-launcher    create a desktop shortcut and app menu entry
- *   bdownload --uninstall-launcher  remove them
- *   bdownload --update              update yt-dlp (fixes most "download failed" errors)
- *   bdownload --doctor              check that everything is set up correctly
- *   bdownload --reset               delete the private Python environment
+ *   massfetch                       start and open the browser
+ *   massfetch --port 8080           use another port
+ *   massfetch --no-open             do not open the browser
+ *   massfetch --install-launcher    create a desktop shortcut and app menu entry
+ *   massfetch --uninstall-launcher  remove them
+ *   massfetch --update              update yt-dlp (fixes most "download failed" errors)
+ *   massfetch --doctor              check that everything is set up correctly
+ *   massfetch --reset               delete the private Python environment
  *
- * @author Jollibe Dablo
+ * @author Jollibe Dablo (byApolloWorks)
  */
 'use strict';
 
@@ -26,11 +26,11 @@ const pkg = require('../package.json');
 const py = require('../lib/python');
 const launcher = require('../lib/launcher');
 
-const HELP = `bdownload ${pkg.version}
+const HELP = `massfetch ${pkg.version}
 Bulk video and image downloader with a local web interface.
 
 Usage:
-  bdownload [options]
+  massfetch [options]
 
 Options:
   --port <number>          Port to use (default 5757)
@@ -43,7 +43,7 @@ Options:
   -v, --version            Show the version
   -h, --help               Show this help
 
-Made by Jollibe Dablo.`;
+Made by Jollibe Dablo (byApolloWorks).`;
 
 /** Print a message and stop with an error code. */
 function fail(message) {
@@ -56,9 +56,9 @@ function requirePython() {
   const python = py.findPython();
   if (!python) {
     fail(
-      'bdownload needs Python 3.9 or newer, but none was found.\n' +
-        'Install it from https://www.python.org/downloads/ and run bdownload again.\n' +
-        'Already installed somewhere else? Set BDOWNLOAD_PYTHON to its full path.'
+      'massfetch needs Python 3.9 or newer, but none was found.\n' +
+        'Install it from https://www.python.org/downloads/ and run massfetch again.\n' +
+        'Already installed somewhere else? Set MASSFETCH_PYTHON (or BDOWNLOAD_PYTHON) to its full path.'
     );
   }
   return python;
@@ -69,7 +69,7 @@ function doctor() {
   const ok = (label, value) => console.log(`  [ok]   ${label}: ${value}`);
   const bad = (label, value) => console.log(`  [fail] ${label}: ${value}`);
 
-  console.log(`bdownload ${pkg.version} setup check\n`);
+  console.log(`massfetch ${pkg.version} setup check\n`);
   ok('Node', process.version);
 
   const python = py.findPython();
@@ -108,7 +108,7 @@ function main() {
 
   if (has('--reset')) {
     py.resetEnvironment();
-    return console.log('Private Python environment deleted. It will be rebuilt the next time you run bdownload.');
+    return console.log('Private Python environment deleted. It will be rebuilt the next time you run massfetch.');
   }
 
   if (has('--install-launcher')) {
@@ -116,7 +116,7 @@ function main() {
       const created = launcher.installLauncher();
       console.log('Launcher created:');
       created.forEach((item) => console.log('  ' + item));
-      console.log('\nYou can now start Bulk Downloader from your desktop or app menu.');
+      console.log('\nYou can now start MassFetch from your desktop or app menu.');
     } catch (error) {
       fail('Could not create the launcher: ' + error.message);
     }
@@ -137,7 +137,7 @@ function main() {
   const passthrough = [];
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--port') {
-      if (!/^\d+$/.test(argv[i + 1] || '')) fail('--port needs a number, for example: bdownload --port 8080');
+      if (!/^\d+$/.test(argv[i + 1] || '')) fail('--port needs a number, for example: massfetch --port 8080');
       passthrough.push('--port', argv[++i]);
     } else if (argv[i] === '--no-open') {
       passthrough.push('--no-open');

@@ -1,10 +1,10 @@
 /**
- * bdownload web interface logic.
+ * massfetch web interface logic.
  *
  * Talks to the Flask API (server.py): uploads CSV/JSON files, lets the user
  * pick a link column per file, starts a batch and polls for progress.
  *
- * @author Jollibe Dablo
+ * @author Jollibe Dablo (byApolloWorks)
  */
 (function () {
   "use strict";
@@ -67,7 +67,7 @@
     state.overrides = info.override_options || state.overrides;
     renderFfmpeg(info);
     if (!$("#outputDir").value) { $("#outputDir").value = info.default_output; }
-    if (!info.yt_dlp) { showError("yt-dlp is not installed. Run: bdownload --reset"); }
+    if (!info.yt_dlp) { showError("yt-dlp is not installed. Run: massfetch --reset"); }
   }
 
   // ------------------------------------------------------------- files

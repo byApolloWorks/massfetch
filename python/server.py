@@ -1,8 +1,8 @@
 """
-bdownload web server
+massfetch web server
 ====================
 
-A small Flask app that serves the bdownload web interface on your own computer
+A small Flask app that serves the massfetch web interface on your own computer
 and exposes a JSON API to the download engine in core.py.
 
 It listens on 127.0.0.1 only, so it cannot be reached from other devices.
@@ -10,9 +10,9 @@ It listens on 127.0.0.1 only, so it cannot be reached from other devices.
 Run it directly:
     python server.py --port 5757 --no-open
 
-Normally you start it with the `bdownload` command, which sets up Python for you.
+Normally you start it with the `massfetch` command, which sets up Python for you.
 
-@author Jollibe Dablo
+@author Jollibe Dablo (byApolloWorks)
 """
 
 import argparse
@@ -50,8 +50,8 @@ def only_local_hosts():
 
 
 def _default_output_dir():
-    """Return the default download folder (~/Downloads/bdownload)."""
-    return os.path.join(os.path.expanduser("~"), "Downloads", "bdownload")
+    """Return the default download folder (~/Downloads/massfetch)."""
+    return os.path.join(os.path.expanduser("~"), "Downloads", "massfetch")
 
 
 # ------------------------------------------------------------------- pages
@@ -252,7 +252,7 @@ def _find_free_port(preferred):
 
 def main():
     """Parse command-line options, start the server and open the browser."""
-    parser = argparse.ArgumentParser(description="bdownload web server")
+    parser = argparse.ArgumentParser(description="massfetch web server")
     parser.add_argument("--port", type=int, default=DEFAULT_PORT, help="port to listen on (default 5757)")
     parser.add_argument("--no-open", action="store_true", help="do not open the browser automatically")
     args = parser.parse_args()
@@ -262,7 +262,7 @@ def main():
     url = f"http://127.0.0.1:{port}"
 
     logging.getLogger("werkzeug").setLevel(logging.ERROR)
-    print(f"\n  bdownload {APP_VERSION} is running at {url}")
+    print(f"\n  massfetch {APP_VERSION} is running at {url}")
     print("  Press Ctrl+C to stop.\n", flush=True)
 
     if not args.no_open:

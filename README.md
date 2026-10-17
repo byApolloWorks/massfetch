@@ -1,4 +1,4 @@
-# bdownload
+# massfetch
 
 Bulk video and image downloader with a clean web interface that runs on your own computer.
 
@@ -15,7 +15,7 @@ Made by Jollibe Dablo (byApolloWorks).
 ## Install
 
 ```bash
-npm install -g bdownload
+npm install -g massfetch
 ```
 
 ## Use it
@@ -23,7 +23,7 @@ npm install -g bdownload
 1. Open a terminal and run:
 
    ```bash
-   bdownload
+   massfetch
    ```
 
 2. Your browser opens the app. The very first run takes about a minute while it sets itself up. After that it starts in a second.
@@ -41,21 +41,21 @@ To stop the app, go back to the terminal and press `Ctrl+C`.
 Create a desktop shortcut and an app menu entry (Start Menu on Windows, Applications on Mac, app menu on Linux):
 
 ```bash
-bdownload --install-launcher
+massfetch --install-launcher
 ```
 
 To remove them:
 
 ```bash
-bdownload --uninstall-launcher
+massfetch --uninstall-launcher
 ```
 
 ## Install ffmpeg (optional)
 
-| System  | Command                  |
-| ------- | ------------------------ |
-| Mac     | `brew install ffmpeg`    |
-| Windows | `winget install ffmpeg`  |
+| System  | Command                   |
+| ------- | ------------------------- |
+| Mac     | `brew install ffmpeg`     |
+| Windows | `winget install ffmpeg`   |
 | Linux   | `sudo apt install ffmpeg` |
 
 Without ffmpeg, videos still download with sound, but at a lower resolution.
@@ -64,14 +64,14 @@ Without ffmpeg, videos still download with sound, but at a lower resolution.
 
 | Command                          | What it does                                      |
 | -------------------------------- | ------------------------------------------------- |
-| `bdownload`                      | Start the app and open the browser                |
-| `bdownload --port 8080`          | Use a different port (default 5757)               |
-| `bdownload --no-open`            | Start without opening the browser                 |
-| `bdownload --update`             | Update yt-dlp, then start                         |
-| `bdownload --doctor`             | Check that Python, packages and ffmpeg are fine   |
-| `bdownload --reset`              | Delete the private Python setup so it is rebuilt  |
-| `bdownload --install-launcher`   | Create the desktop shortcut and app menu entry    |
-| `bdownload --uninstall-launcher` | Remove them                                       |
+| `massfetch`                      | Start the app and open the browser                |
+| `massfetch --port 8080`          | Use a different port (default 5757)               |
+| `massfetch --no-open`            | Start without opening the browser                 |
+| `massfetch --update`             | Update yt-dlp, then start                         |
+| `massfetch --doctor`             | Check that Python, packages and ffmpeg are fine   |
+| `massfetch --reset`              | Delete the private Python setup so it is rebuilt  |
+| `massfetch --install-launcher`   | Create the desktop shortcut and app menu entry    |
+| `massfetch --uninstall-launcher` | Remove them                                       |
 
 ## Your link files
 
@@ -95,12 +95,12 @@ Each file can use a different column. If a file mixes link types, leave **Downlo
 
 ## Something went wrong?
 
-- **Videos fail to download.** Run `bdownload --update`. Sites change often and a newer yt-dlp usually fixes it.
-- **A Facebook video fails.** Only public posts work. Private posts need a login, which bdownload never uses.
-- **"Python not found".** Install Python 3.9 or newer from python.org. If it is installed in an unusual place, set the `BDOWNLOAD_PYTHON` environment variable to its full path.
+- **Videos fail to download.** Run `massfetch --update`. Sites change often and a newer yt-dlp usually fixes it.
+- **A Facebook video fails.** Only public posts work. Private posts need a login, which massfetch never uses.
+- **"Python not found".** Install Python 3.9 or newer from python.org. If it is installed in an unusual place, set the `MASSFETCH_PYTHON` environment variable to its full path.
 - **Linux says it cannot create the environment.** Run `sudo apt install python3-venv`.
-- **The launcher stopped working after moving Node.** Run `bdownload --install-launcher` again.
-- **Anything else.** Run `bdownload --doctor` and check what it reports.
+- **The launcher stopped working after moving Node.** Run `massfetch --install-launcher` again.
+- **Anything else.** Run `massfetch --doctor` and check what it reports.
 
 ## Good to know
 
@@ -112,7 +112,7 @@ Each file can use a different column. If a file mixes link types, leave **Downlo
 ## For developers
 
 ```
-bin/bdownload.js      the command (finds Python, builds the private environment, starts the server)
+bin/massfetch.js      the command (finds Python, builds the private environment, starts the server)
 lib/python.js         Python discovery and virtual environment setup
 lib/launcher.js       desktop shortcut and app menu entry for each operating system
 python/core.py        the download engine (no web code, usable on its own)
