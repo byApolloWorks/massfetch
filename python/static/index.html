@@ -28,13 +28,23 @@
       </span>
       <div>
         <h1>MassFetch</h1>
-        <p>Bulk video and image downloader</p>
+        <p>Bulk video and image downloader &bull; <a href="https://github.com/byApolloWorks" target="_blank" rel="noopener noreferrer" class="byapollo-link">cc byApolloWorks</a></p>
       </div>
     </div>
-    <div class="ffmpeg" id="ffmpeg">
-      <span class="dot" id="ffmpegDot"></span>
-      <span id="ffmpegText">Checking ffmpeg</span>
-      <button class="btn btn-quiet btn-small" id="ffmpegRecheck" type="button">Recheck</button>
+    <div class="topbar-actions">
+      <a href="https://github.com/byApolloWorks/massfetch" target="_blank" rel="noopener noreferrer" class="badge-btn star-btn" id="starOnGithubBtn">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="#fbbf24" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+        <span>Give us a Star</span>
+      </a>
+      <a href="https://www.npmjs.com/package/massfetch" target="_blank" rel="noopener noreferrer" class="badge-btn npm-btn" id="npmPackageBtn">
+        <svg viewBox="0 0 780 250" width="16" height="11" fill="#cb3837" aria-hidden="true"><path d="M240,250h100v-50h100V0H240V250z M340,50h50v100h-50V50z M480,0v200h100V50h50v150h50V50h50v150h50V0H480z M0,200h100V50h50v150h50V0H0V200z"/></svg>
+        <span>Available on npm</span>
+      </a>
+      <div class="ffmpeg" id="ffmpeg">
+        <span class="dot" id="ffmpegDot"></span>
+        <span id="ffmpegText">Checking ffmpeg</span>
+        <button class="btn btn-quiet btn-small" id="ffmpegRecheck" type="button">Recheck</button>
+      </div>
     </div>
   </header>
 
@@ -103,6 +113,22 @@
       </section>
     </div>
   </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="https://github.com/byApolloWorks/massfetch" target="_blank" rel="noopener noreferrer" class="footer-btn star-footer-btn">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="#fbbf24" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+        Give us a Star on GitHub
+      </a>
+      <a href="https://www.npmjs.com/package/massfetch" target="_blank" rel="noopener noreferrer" class="footer-btn npm-footer-btn">
+        <svg viewBox="0 0 780 250" width="16" height="11" fill="#cb3837" aria-hidden="true"><path d="M240,250h100v-50h100V0H240V250z M340,50h50v100h-50V50z M480,0v200h100V50h50v150h50V50h50v150h50V0H480z M0,200h100V50h50v150h50V0H0V200z"/></svg>
+        Available on npm
+      </a>
+    </div>
+    <p class="footer-credit">
+      cc <a href="https://github.com/byApolloWorks" target="_blank" rel="noopener noreferrer">byApolloWorks</a> &bull; Made by Jollibe Dablo
+    </p>
+  </footer>
 
   <div class="modal" id="modal" hidden>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">

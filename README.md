@@ -1,8 +1,15 @@
 # massfetch
 
+[![npm version](https://img.shields.io/npm/v/massfetch?color=4F8CFF&label=npm)](https://www.npmjs.com/package/massfetch)
+[![GitHub stars](https://img.shields.io/github/stars/byApolloWorks/massfetch?style=social)](https://github.com/byApolloWorks/massfetch)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Organization](https://img.shields.io/badge/org-byApolloWorks-blueviolet)](https://github.com/byApolloWorks)
+
 Bulk video and image downloader with a clean web interface that runs on your own computer.
 
 Give it CSV or JSON files full of links. It downloads every YouTube video, Facebook video and image link for you and saves a report of what worked.
+
+⭐ **[Give us a Star on GitHub](https://github.com/byApolloWorks/massfetch)** &bull; 📦 **[Available on npm](https://www.npmjs.com/package/massfetch)** &bull; 🏢 **cc [byApolloWorks](https://github.com/byApolloWorks)**
 
 Made by Jollibe Dablo (byApolloWorks).
 
