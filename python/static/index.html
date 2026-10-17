@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+  bdownload web interface
+  @author Jollibe Dablo
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>bdownload</title>
+  <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>
+      </span>
+      <div>
+        <h1>bdownload</h1>
+        <p>Bulk video and image downloader</p>
+      </div>
+    </div>
+    <div class="ffmpeg" id="ffmpeg">
+      <span class="dot" id="ffmpegDot"></span>
+      <span id="ffmpegText">Checking ffmpeg</span>
+      <button class="btn btn-quiet btn-small" id="ffmpegRecheck" type="button">Recheck</button>
+    </div>
+  </header>
+
+  <p class="notice" id="ffmpegNotice" hidden></p>
+
+  <main class="layout">
+    <section class="panel sources" aria-labelledby="sourcesTitle">
+      <div class="panel-head">
+        <h2 id="sourcesTitle">Sources</h2>
+        <button class="btn btn-quiet btn-small" id="clearFiles" type="button">Clear all</button>
+      </div>
+
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Add CSV or JSON files">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 20h14"/></svg>
+        <strong>Add CSV or JSON files</strong>
+        <span>Drop files here or click to browse</span>
+        <input type="file" id="fileInput" accept=".csv,.json" multiple hidden>
+      </div>
+
+      <p class="empty" id="emptyFiles">No files yet. Each file can use a different link column.</p>
+      <div class="file-list" id="fileList"></div>
+    </section>
+
+    <div class="stack">
+      <section class="panel" aria-labelledby="destTitle">
+        <h2 id="destTitle">Destination</h2>
+        <label class="field-label" for="outputDir">Output folder</label>
+        <div class="row">
+          <input class="input" id="outputDir" type="text" spellcheck="false" placeholder="Where should downloads be saved?">
+          <button class="btn btn-secondary" id="browseBtn" type="button">Browse</button>
+        </div>
+        <div class="slider-row">
+          <label class="field-label" for="workers">Parallel downloads</label>
+          <input id="workers" type="range" min="1" max="8" step="1" value="3">
+          <output id="workersValue">3</output>
+        </div>
+      </section>
+
+      <section class="panel run" aria-labelledby="runTitle">
+        <div class="panel-head">
+          <h2 id="runTitle">Download</h2>
+          <span class="status" id="statusText">Idle</span>
+        </div>
+        <div class="counts">
+          <div class="count"><span class="num ok" id="countOk">0</span><span class="cap">Succeeded</span></div>
+          <div class="count"><span class="num err" id="countFailed">0</span><span class="cap">Failed</span></div>
+          <div class="count"><span class="num warn" id="countSkipped">0</span><span class="cap">Skipped</span></div>
+        </div>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar"><span id="barFill"></span></div>
+        <p class="error" id="errorText" role="alert" hidden></p>
+        <div class="row actions">
+          <button class="btn btn-primary" id="startBtn" type="button">Start download</button>
+          <button class="btn btn-secondary" id="stopBtn" type="button" disabled>Stop</button>
+          <button class="btn btn-quiet push" id="openBtn" type="button" disabled>Open output folder</button>
+        </div>
+      </section>
+
+      <section class="panel log-panel" aria-labelledby="logTitle">
+        <div class="panel-head">
+          <h2 id="logTitle">Activity</h2>
+          <button class="btn btn-quiet btn-small" id="clearLog" type="button">Clear</button>
+        </div>
+        <div class="log" id="log" aria-live="polite">
+          <p class="empty" id="emptyLog">Activity appears here once a download starts.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Choose a folder</h2>
+      <p class="path" id="modalPath"></p>
+      <div class="folders" id="folders"></div>
+      <div class="row end">
+        <button class="btn btn-secondary" id="modalCancel" type="button">Cancel</button>
+        <button class="btn btn-primary" id="modalUse" type="button">Use this folder</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
