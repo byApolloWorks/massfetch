@@ -27,7 +27,7 @@ const py = require('../lib/python');
 const launcher = require('../lib/launcher');
 
 const HELP = `massfetch ${pkg.version}
-Bulk video and image downloader with a local web interface.
+Bulk video and image downloader with a local web interface (CSV, JSON, TXT).
 
 Usage:
   massfetch [options]

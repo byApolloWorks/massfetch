@@ -98,8 +98,8 @@ def upload_file():
 
     name = os.path.basename(upload.filename)
     ext = os.path.splitext(name)[1].lower()
-    if ext not in (".csv", ".json"):
-        return jsonify(error=f"{name} is not a CSV or JSON file."), 400
+    if ext not in (".csv", ".json", ".txt"):
+        return jsonify(error=f"{name} is not a CSV, JSON or TXT file."), 400
 
     temp_path = os.path.join(HERE, f".upload_{uuid.uuid4().hex}{ext}")
     try:

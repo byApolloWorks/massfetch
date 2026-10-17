@@ -7,3 +7,5 @@ python/__pycache__/
 **/.DS_Store
 .git/
 .gitignore
+.github/
+img/

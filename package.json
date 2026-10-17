@@ -1,7 +1,7 @@
 {
   "name": "massfetch",
   "version": "1.0.0",
-  "description": "Bulk video and image downloader with a local web interface. Load CSV or JSON files of links and download YouTube, Facebook and image links in one go.",
+  "description": "Bulk video and image downloader with a local web interface. Load CSV, JSON or TXT files of links and download YouTube, Facebook and image links in one go.",
   "author": "Jollibe Dablo (byApolloWorks)",
   "license": "MIT",
   "repository": {
@@ -18,7 +18,10 @@
   "files": [
     "bin",
     "lib",
-    "python",
+    "python/core.py",
+    "python/server.py",
+    "python/requirements.txt",
+    "python/static",
     "README.md",
     "LICENSE"
   ],

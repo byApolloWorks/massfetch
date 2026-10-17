@@ -6,7 +6,7 @@ Download engine used by the massfetch web interface. It contains no web or GUI
 code, so it can also be imported and used on its own.
 
 What it does:
-  * Reads CSV and JSON files and finds the column that holds the links.
+  * Reads CSV, JSON and TXT files and finds the column that holds the links.
   * Classifies each link as YouTube, Facebook or Image.
   * Downloads YouTube and Facebook videos with yt-dlp.
   * Falls back to reading the public Facebook page source when yt-dlp fails
@@ -158,10 +158,56 @@ def read_json(path):
     return header, rows
 
 
+def read_txt(path):
+    """
+    Read a plain text (.txt) file into a table.
+
+    Each non-empty line (ignoring comments starting with # or //) is treated
+    as a row with a 'link' column. Quotes around URLs are automatically stripped.
+
+    Returns:
+        tuple: (header list, list of data rows)
+    """
+    last_error = None
+    for encoding in ("utf-8-sig", "utf-8", "cp1252", "latin-1"):
+        try:
+            with open(path, "r", encoding=encoding) as handle:
+                raw_lines = [line.strip() for line in handle]
+
+            lines = []
+            for line in raw_lines:
+                if not line or line.startswith("#") or line.startswith("//"):
+                    continue
+                if (line.startswith('"') and line.endswith('"')) or (line.startswith("'") and line.endswith("'")):
+                    line = line[1:-1].strip()
+                if line:
+                    lines.append(line)
+
+            if not lines:
+                return [], []
+
+            first_lower = lines[0].lower()
+            if first_lower in ("link", "url", "urls", "links", "video", "videos", "href"):
+                header = [lines[0]]
+                data = lines[1:]
+            else:
+                header = ["link"]
+                data = lines
+
+            rows = [[item] for item in data]
+            return header, rows
+        except UnicodeDecodeError as error:
+            last_error = error
+    raise RuntimeError(f"Could not read TXT file: {last_error}")
+
+
 def read_table(path):
-    """Read a .csv or .json file based on its extension. Returns (header, rows)."""
-    if os.path.splitext(path)[1].lower() == ".json":
+    """Read a .csv, .json or .txt file based on its extension. Returns (header, rows)."""
+    ext = os.path.splitext(path)[1].lower()
+    if ext == ".json":
         return read_json(path)
+    if ext == ".txt":
+        return read_txt(path)
     return read_csv(path)
 
 

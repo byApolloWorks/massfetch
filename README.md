@@ -5,47 +5,74 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Organization](https://img.shields.io/badge/org-byApolloWorks-blueviolet)](https://github.com/byApolloWorks)
 
-Bulk video and image downloader with a clean web interface that runs on your own computer.
+Bulk video and image downloader with a clean local web interface that runs privately on your computer.
 
-Give it CSV or JSON files full of links. It downloads every YouTube video, Facebook video and image link for you and saves a report of what worked.
+Load CSV, JSON, or plain TXT files containing links. MassFetch automatically downloads every YouTube video, Facebook video/reel, and direct image in parallel, sorts them into organized folders, and produces a complete audit report.
 
 ⭐ **[Give us a Star on GitHub](https://github.com/byApolloWorks/massfetch)** &bull; 📦 **[Available on npm](https://www.npmjs.com/package/massfetch)** &bull; 🏢 **cc [byApolloWorks](https://github.com/byApolloWorks)**
 
-Made by Jollibe Dablo (byApolloWorks).
+---
 
-## What you need
+![MassFetch Web Interface](.github/assets/MassFetch-Web.jpg)
+
+---
+
+## Highlights
+
+- **Multi-Format Ingestion**: Drag and drop `.csv`, `.json`, or `.txt` files. Automatically detects delimiters (comma, tab, semicolon, pipe) and handles multiple file encodings (`UTF-8`, `CP1252`, `Latin-1`).
+- **Smart Link Detection**: Automatically scans headers (`link`, `url`, `video`, `image`, etc.) to find target URLs without manual configuration.
+- **Universal Media Engines**:
+  - **YouTube**: Videos, Shorts, and playlists downloaded via `yt-dlp`.
+  - **Facebook**: Public posts, videos, and reels with automatic source extraction fallback (no login or cookies needed).
+  - **Images**: High-speed parallel HTTP downloading for JPG, PNG, WebP, GIF, SVG, BMP, and TIFF.
+- **Parallel Downloading**: Multi-threaded download engine with in-app concurrency control (1 to 16 simultaneous streams).
+- **Auto-Sorting & Reports**: Automatically categorizes finished files into `YouTube/`, `Facebook/`, and `Images/` folders, generating a timestamped `download_report_<datetime>.csv` summary.
+- **Visual Folder Navigator**: Pick local destination folders directly within the interface using an interactive directory browser.
+- **Zero-Config Setup**: Automatically detects Python 3.9+ and provisions a private, isolated virtual environment without touching your system Python packages.
+- **1-Click Desktop Launcher**: Optional native launcher creation for macOS (`MassFetch.app`), Windows (Desktop & Start Menu shortcuts), and Linux (`.desktop` entries).
+- **Local & Secure**: Binds strictly to `127.0.0.1` with DNS-rebinding protection. Your links and files never leave your computer.
+
+## Requirements
 
 - [Node.js](https://nodejs.org) 16 or newer
 - [Python](https://www.python.org/downloads/) 3.9 or newer
-- [ffmpeg](https://ffmpeg.org) (optional, but recommended for full quality video with sound)
+- [ffmpeg](https://ffmpeg.org) (optional, recommended for best quality video and audio merging)
 
-## Install
+### Installing ffmpeg (optional)
+
+| System  | Command                   |
+| ------- | ------------------------- |
+| Mac     | `brew install ffmpeg`     |
+| Windows | `winget install ffmpeg`   |
+| Linux   | `sudo apt install ffmpeg` |
+
+*Without ffmpeg, videos download with audio at standard resolution.*
+
+## Installation
+
+Install globally via npm:
 
 ```bash
 npm install -g massfetch
 ```
 
-## Use it
+## Quick Start
 
-1. Open a terminal and run:
-
+1. Start the application:
    ```bash
    massfetch
    ```
+2. Your browser opens `http://127.0.0.1:5757`. The first run builds the private Python environment in under a minute; subsequent runs start instantly.
+3. Drop your `.csv`, `.json`, or `.txt` files into the **Sources** panel.
+4. Verify or adjust the detected **Link column** and choose an **Output folder**.
+5. Click **Start download**.
+6. When complete, click **Open output folder** to view your sorted downloads and report.
 
-2. Your browser opens the app. The very first run takes about a minute while it sets itself up. After that it starts in a second.
-3. Click **Add CSV or JSON files** and choose your files.
-4. For each file, check the **Link column**. It is picked for you when the column is called link, url, video and so on.
-5. Choose an **Output folder**.
-6. Click **Start download**.
+To exit, return to your terminal and press `Ctrl+C`.
 
-When it finishes, click **Open output folder**. Your files are sorted into `YouTube`, `Facebook` and `Images` folders, and a `download_report_...csv` file lists every link and whether it worked.
+## Desktop Launcher
 
-To stop the app, go back to the terminal and press `Ctrl+C`.
-
-## Start it with one click
-
-Create a desktop shortcut and an app menu entry (Start Menu on Windows, Applications on Mac, app menu on Linux):
+Create desktop and application menu shortcuts for one-click access:
 
 ```bash
 massfetch --install-launcher
@@ -57,84 +84,72 @@ To remove them:
 massfetch --uninstall-launcher
 ```
 
-## Install ffmpeg (optional)
+## Supported File Formats
 
-| System  | Command                   |
-| ------- | ------------------------- |
-| Mac     | `brew install ffmpeg`     |
-| Windows | `winget install ffmpeg`   |
-| Linux   | `sudo apt install ffmpeg` |
+### 1. Plain Text (`.txt`)
+One link per line. Comments (starting with `#` or `//`) and blank lines are automatically ignored:
+```text
+# YouTube links
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
+https://youtu.be/kJQP7kiw5Fk
 
-Without ffmpeg, videos still download with sound, but at a lower resolution.
+# Facebook & Images
+https://www.facebook.com/reel/123456789
+https://example.com/photo.jpg
+```
 
-## Commands
-
-| Command                          | What it does                                      |
-| -------------------------------- | ------------------------------------------------- |
-| `massfetch`                      | Start the app and open the browser                |
-| `massfetch --port 8080`          | Use a different port (default 5757)               |
-| `massfetch --no-open`            | Start without opening the browser                 |
-| `massfetch --update`             | Update yt-dlp, then start                         |
-| `massfetch --doctor`             | Check that Python, packages and ffmpeg are fine   |
-| `massfetch --reset`              | Delete the private Python setup so it is rebuilt  |
-| `massfetch --install-launcher`   | Create the desktop shortcut and app menu entry    |
-| `massfetch --uninstall-launcher` | Remove them                                       |
-
-## Your link files
-
-Any CSV or JSON file works. The file just needs one column (or key) that holds links.
-
+### 2. CSV (`.csv`)
+Comma, tab, or semicolon separated with a header row:
 ```csv
 title,link
 First video,https://www.youtube.com/watch?v=abc123
 Second video,https://www.facebook.com/reel/123456
-A photo,https://example.com/photo.jpg
+Photo,https://example.com/photo.jpg
 ```
 
+### 3. JSON (`.json`)
+A top-level list of objects or an object containing a list:
 ```json
 [
-  { "name": "First video", "link": "https://youtu.be/abc123" },
-  { "name": "A photo", "link": "https://example.com/photo.jpg" }
+  { "title": "First video", "link": "https://youtu.be/abc123" },
+  { "title": "Photo", "link": "https://example.com/photo.jpg" }
 ]
 ```
 
-Each file can use a different column. If a file mixes link types, leave **Download as** on Auto-detect. If you know every link is the same kind, pick YouTube, Facebook or Image to force it.
+## Command Line Options
 
-## Something went wrong?
+| Command                          | Description                                       |
+| -------------------------------- | ------------------------------------------------- |
+| `massfetch`                      | Start the server and open your browser            |
+| `massfetch --port <number>`      | Run on a custom port (default: `5757`)            |
+| `massfetch --no-open`            | Start server without launching the browser        |
+| `massfetch --update`             | Update `yt-dlp` to latest release, then start     |
+| `massfetch --doctor`             | Diagnostics check for Node, Python, and ffmpeg    |
+| `massfetch --reset`              | Rebuild the isolated Python virtual environment   |
+| `massfetch --install-launcher`   | Create desktop and app menu shortcuts             |
+| `massfetch --uninstall-launcher` | Remove shortcuts and desktop entries              |
+| `massfetch -v, --version`        | Print version                                     |
+| `massfetch -h, --help`           | Display help information                          |
 
-- **Videos fail to download.** Run `massfetch --update`. Sites change often and a newer yt-dlp usually fixes it.
-- **A Facebook video fails.** Only public posts work. Private posts need a login, which massfetch never uses.
-- **"Python not found".** Install Python 3.9 or newer from python.org. If it is installed in an unusual place, set the `MASSFETCH_PYTHON` environment variable to its full path.
-- **Linux says it cannot create the environment.** Run `sudo apt install python3-venv`.
-- **The launcher stopped working after moving Node.** Run `massfetch --install-launcher` again.
-- **Anything else.** Run `massfetch --doctor` and check what it reports.
+## Troubleshooting
 
-## Good to know
+- **Downloads fail or video sites changed**: Run `massfetch --update`. Media extractors update frequently.
+- **Private posts**: Facebook videos must be public; MassFetch does not require or store user credentials.
+- **Custom Python executable**: Set the `MASSFETCH_PYTHON` environment variable to your Python binary path if it is not found automatically.
+- **Linux venv creation**: Ensure python3-venv is installed: `sudo apt install python3-venv`.
+- **System checks**: Run `massfetch --doctor` to verify your environment status.
 
-- The app only listens on your own computer (`127.0.0.1`). Nobody else on your network can reach it.
-- Your files and links never leave your computer, except for the downloads themselves.
-- The page loads the Poppins font from Google Fonts. Offline, it falls back to your system font.
-- Only download content you have the right to download.
-
-## For developers
+## Project Structure
 
 ```
-bin/massfetch.js      the command (finds Python, builds the private environment, starts the server)
-lib/python.js         Python discovery and virtual environment setup
-lib/launcher.js       desktop shortcut and app menu entry for each operating system
-python/core.py        the download engine (no web code, usable on its own)
-python/server.py      Flask server and JSON API
-python/static/        the web interface (HTML, CSS, JavaScript)
-```
-
-Run the server directly while developing:
-
-```bash
-cd python
-pip install -r requirements.txt
-python server.py --port 5757
+bin/massfetch.js      Node.js CLI runner (manages Python venv & lifecycle)
+lib/python.js         Python discovery and automated virtualenv setup
+lib/launcher.js       Native desktop shortcut installer (macOS, Windows, Linux)
+python/core.py        Parallel download engine (yt-dlp, requests, classifier)
+python/server.py      Lightweight Flask server & JSON API (localhost only)
+python/static/        Frontend interface (HTML5, Vanilla CSS, Vanilla JS, SVG)
 ```
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT &bull; Copyright (c) 2026 byApolloWorks, Jollibe Dablo. See [LICENSE](LICENSE).
